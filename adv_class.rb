@@ -1,16 +1,15 @@
 class Dungeon
+	attr_accessor :rooms, :inventory
+
 	def initialize
 		@rooms = []
-		self.add_room Room.new "Inventory" #inventory is a special room no exits
+		@inventory = add_room Room.new "Inventory" #inventory is a special room no exits
 	end
 
 	def add_room room
 		@rooms.push(room)
 	end
 
-	def rooms # do I need this?
-		@rooms
-	end
 end
 
 class Dungeon_thing
