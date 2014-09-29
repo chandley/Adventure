@@ -12,7 +12,7 @@ def user_input	# returns verb, noun
 	else
 		puts "Sorry, didn't understand"
 	end
-	return @verb, @noun
+	return @verb.downcase, @noun.downcase
 end
 
 
@@ -20,14 +20,11 @@ end
 #initialise dungeon
 my_dungeon = Dungeon.new
 inventory = my_dungeon.rooms[0]
-add_data my_dungeon
-
+add_data2 my_dungeon
 current_room = my_dungeon.rooms[1]
 
-current_room.describe
-
 #test dungeon
-(0..5).each do #test loop few times
+(0..10).each do #test loop few times
 	current_room.describe
 	puts ''
 	verb, noun = user_input
@@ -50,7 +47,7 @@ current_room.describe
 		else	
 			puts "sorry, didn't understand"		
 	end
-	
+	puts ''
 end
 
 

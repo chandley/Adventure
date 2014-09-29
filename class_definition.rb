@@ -38,8 +38,7 @@ class Room < Dungeon_thing
 		@items.push item
 	end
 
-	def get_item
-		#problem accessing inventory as other room - return item
+	def get_item # returns item - you need to add to inventory in main loop
 		@items.pop
 	end
 
@@ -55,6 +54,7 @@ class Room < Dungeon_thing
 	end
 
 	def move direction
+		direction.upcase!
 		if @exits[direction].nil?
 			puts "Can't move, try again"
 			new_room = self # stay in room if bad exit chosen
