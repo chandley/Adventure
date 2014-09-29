@@ -1,5 +1,5 @@
 class Dungeon
-	attr_accessor :rooms, :inventory
+	attr_accessor :rooms, :inventory #not sure inventory works here...
 
 	def initialize
 		@rooms = []
@@ -77,25 +77,31 @@ class Dungeon_item   < Dungeon_thing
 
 end
 
+def add_data (dungeon)
+
+	#set up rooms
+	dungeon.add_room Room.new 'A musty dining room'
+	dungeon.add_room Room.new 'A sunny sitting room'
+	dungeon.add_room Room.new 'A cluttered kitchen'
+	dungeon.add_room Room.new 'A room with no exits'
+
+		# i don't like the way we add exits - is there a better way?
+	dungeon.rooms[1].add_exit 'N', dungeon.rooms[2]
+	dungeon.rooms[2].add_exit 'S', dungeon.rooms[1]
+	dungeon.rooms[1].add_exit 'W', dungeon.rooms[3]
+	dungeon.rooms[3].add_exit 'E', dungeon.rooms[1]
+
+	#add items
+	dungeon.rooms[3].add_item Dungeon_item.new 'a rusty saucepan' , 10
+	dungeon.rooms[0].add_item Dungeon_item.new 'a boiled sweet covered in pocket fluff', 1
+	#my_dungeon.inventory.add_item Dungeon_item.new 'a boiled sweet covered in pocket fluff', 1 #this doesn't work - why?
+end
+
 #initialise dungeon
 my_dungeon = Dungeon.new
 inventory = my_dungeon.rooms[0]
+add_data my_dungeon
 
-#set up rooms
-my_dungeon.add_room Room.new 'A musty dining room'
-my_dungeon.add_room Room.new 'A sunny sitting room'
-my_dungeon.add_room Room.new 'A cluttered kitchen'
-my_dungeon.add_room Room.new 'A room with no exits'
-
-	# i don't like the way we add exits - is there a better way?
-my_dungeon.rooms[1].add_exit 'N', my_dungeon.rooms[2]
-my_dungeon.rooms[2].add_exit 'S', my_dungeon.rooms[1]
-my_dungeon.rooms[1].add_exit 'W', my_dungeon.rooms[3]
-my_dungeon.rooms[3].add_exit 'E', my_dungeon.rooms[1]
-
-#add items
-my_dungeon.rooms[3].add_item Dungeon_item.new 'a rusty saucepan' , 10
-inventory.add_item Dungeon_item.new 'a boiled sweet covered in pocket fluff', 1
 
 #test dungeon
 current_room = my_dungeon.rooms[1]
