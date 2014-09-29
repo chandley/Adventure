@@ -44,7 +44,7 @@ current_room.describe
 			puts 'you dropped something'
 		when verb == 'show'
 			inventory.describe if noun == 'inventory' 
-		when verb = 'quit'
+		when verb == 'quit'
 			puts 'bye'
 			break	
 		else	
