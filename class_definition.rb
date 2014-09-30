@@ -1,78 +1,48 @@
-class Dungeon
-	attr_accessor :rooms, :inventory #not sure inventory works here...
 
-	def initialize
-		@rooms = []
-		@inventory = add_room Room.new "Inventory" #inventory is a special room no exits
-	end
-
-	def add_room room
-		@rooms.push(room)
-	end
-
-end
-
-class Dungeon_thing
-	#parent of room, item, monster etc
-	def initialize description
+class Dungeon_thing  
+	attr_accessor :description, :long_description
+	def initialize (description)
 		@description = description
+		@long_descripton = description # default value
 	end
 
-	def describe
-		puts @description
-	end
 end
 
-class Room < Dungeon_thing
-	def initialize description
-		super	
-		@exits =  {}	
-		@items = []		
+class Room < Dungeon_thing 
+	attr_accessor :exits
+	def initialize (description)
+		super (description)
+		@exits = {}		
 	end
 
 	def add_exit direction, room
 		@exits[direction] = room
 	end
 
-	def add_item item
-		@items.push item
+	def long_description #override accessor
+		puts @long_description
+		@exits.each {|direction,room| puts "there is an exit #{direction.upcase} to #{room.description}" }
 	end
-
-	def get_item # returns item - you need to add to inventory in main loop
-		@items.pop
-	end
-
-	def describe
-		super
-		@exits.each do |direction,room|
-		 	puts "there is an exit #{direction.upcase}"
-		end
-		@items.each do |item| 
-			print "You see "
-			item.describe
-		end
-	end
-
-	def move direction
-		direction.upcase!
-		if @exits[direction].nil?
-			puts "Can't move, try again"
-			new_room = self # stay in room if bad exit chosen
-		else
-			puts "You go #{direction}"
-			new_room = @exits[direction]
-		end 
-	end
-end
-
-class Dungeon_item   < Dungeon_thing
-	def initialize description , weight
-		super(description)
-		@weight = weight
-	end
-
-	def describe
-		print @description, ", weight #{@weight}\n"
-	end
+#		@items.each { |item| print "You see " item.describe
+#		end
+	
 
 end
+
+my_room = Room.new ('kitchen' )
+my_room.long_description = 'A cluttered kitchen, light streams in through the window'
+
+your_room = Room.new ('dining room')
+your_room.long_description = 'A dusty dining room. Ivy is growing through the window'
+my_room.exits['N'] = your_room
+your_room.exits['S'] = my_room
+
+current_room = my_room
+puts current_room.long_description
+
+current_room = current_room.exits['N']
+puts current_room.long_description
+
+
+
+
