@@ -30,6 +30,11 @@ class Item < Dungeon_thing
 end
 
 class Monster < Dungeon_thing
+	attr_accessor :alive	
+	def initialize (description, long_description)
+		super description, long_description
+		@alive = true	# monster starts off alive..
+	end
 end
 
 #### functions
@@ -60,6 +65,7 @@ hobgoblin = Monster.new 'Hobgoblin', 'A nasty looking goblin'
 
 empty_gun = Item.new 'unloaded gun','an automatic pistol, it contains no bullets'
 bullets = Item.new 'some bullets', 'some bullets. these look as if they will fit in the gun'
+loaded_gun = Item.new 'loaded gun', 'a gun loaded with bullets'
 
 kitchen.items.push toast
 kitchen.monsters.push hobgoblin
@@ -72,21 +78,46 @@ dining.items.push bullets
 current_room = kitchen	
 
 loop do 
-  puts current_room.long_description
+  puts ''
+  puts "You are in #{current_room.long_description}"
+  puts ''
   verb, noun = user_input "please enter instruction (verb, noun)"
     case verb
-	when  'move'
+	when  'move','go'
 	  	current_room = current_room.exits[noun.upcase[0]] # use first character only
 	  	puts "You go #{noun.upcase} to #{current_room.description}"
-	when  'inventory'
+	when  'inventory','inv'
 	  	inventory.long_description
 	when  'get' 	
 	  	item = inventory.items.push current_room.items.pop
 	  	puts "you pick up #{item.last.description}"
 	when  'drop'
 		item = current_room.items.push inventory.items.pop
-	  	puts "you drop {item.last.description}"	  	
+	  	puts "you drop {item.last.description}"	
+	when  'load'
+		if inventory.items.include?(empty_gun) && inventory.items.include?(bullets)
+			inventory.items.delete(empty_gun)
+			inventory.items.delete(bullets)
+			inventory.items.push loaded_gun
+			puts "CLICK! You loaded the bullets into the gun"
+		else
+			puts "You need gun and bullets to load"
+		end
+	when 'shoot'
+		if inventory.items.include?(loaded_gun) && current_room.monsters.count > 0
+			puts "bang bang"
+			current_room.monsters.each do |monster|
+				puts "You hit #{monster.description}"
+				monster.alive = false
+				monster.description = "dead " + monster.description
+				monster.long_description = "A bloodstained body with bullet holes"
+			end
+		else
+			puts "you can't shoot anything"
+		end
+
   	end	
+
 end
 
 
