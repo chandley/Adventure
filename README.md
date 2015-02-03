@@ -26,6 +26,7 @@ User moves between rooms in a dungeon, interacts with objects and monsters
 * Room, item and monster Classes inherit off Dungeon_thing generic class
 * A big classless loop handles the game mechanics
 
+
 ### Setup
 ```
 ruby adventure.rb
@@ -55,7 +56,7 @@ you pick up toast
 
 * Learned about class inheritance
 * Control flow and parsing text input
-
+* Rewriting the exercise was useful - improved each time
 
 
 
