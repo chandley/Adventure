@@ -1,12 +1,12 @@
 #### setup class
-class Dungeon_thing  
+class Dungeon_thing  # parent object, not used directly
 	attr_accessor :description, :long_description
 	def initialize (description, long_description)
 		@description, @long_description = description, long_description
 	end
 end
 
-class Room < Dungeon_thing 
+class Room < Dungeon_thing # has exits, contains items and monsters
 	attr_accessor :exits, :items, :monsters
 	def initialize (description, long_description)
 		super description, long_description
@@ -69,13 +69,13 @@ loop do
   verb, noun = user_input "please enter instruction (verb, noun)"
     case verb
 	when  'move','go'
-	  	current_room = current_room.exits[noun.upcase[0]] # use first character only
+	  	current_room = current_room.exits[noun.upcase[0]] # use first character of noun only
 	  	puts "You go #{noun.upcase} to #{current_room.description}"
 	when  'inventory','inv'
 	  	puts inventory.long_description
 	when  'get' 	
 	  	item = inventory.items.push current_room.items.pop
-	  	puts "you pick up #{item.last.description}"
+	  	puts "you pick up #{item.last.description}" 
 	when  'drop'
 		item = current_room.items.push inventory.items.pop
 	  	puts "you drop {item.last.description}"	

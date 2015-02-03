@@ -5,7 +5,7 @@
 
 ## Summary
 
-Pre-course adventure game excercise from Learning Ruby the Hard Way
+Adventure game excercise from Learning Ruby the Hard Way
 
 ### Problem
 
@@ -33,7 +33,6 @@ ruby adventure.rb
 
 
 ### Tests
-no tests
 
 ### Images
 ```
@@ -48,8 +47,7 @@ you pick up toast
 ```
 ### To do
 
-* Methods are too long
-* Lacks game object
+
 
 ### Learning points
 
